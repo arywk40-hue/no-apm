@@ -67,7 +67,7 @@ echo ""
 echo "[STEP 3] Evaluating on all 4 Test Datasets..."
 # We use the final epoch's checkpoint for evaluation.
 # Assuming max_epoch is 25 (from config), so epoch25.pth
-CHECKPOINT_DIR="run/uscod/UCOD-DPL_dinov2/ckp"
+CHECKPOINT_DIR="run/uscod/UCOD-DPL_dinov2/UCOD-DPL_dinov2/ckp"
 LATEST_CKPT=$(ls -t ${CHECKPOINT_DIR}/epoch*.pth 2>/dev/null | head -1)
 
 if [ -f "$LATEST_CKPT" ]; then

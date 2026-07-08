@@ -2,7 +2,7 @@ cfg = dict(
     _BASE_ = [
         '../__base__/accelerate.py',
         '../__base__/newbase.py',
-        '../dataset/cod4040.py'
+        '../cod/cod4040.py'
     ],
     exp_name = 'UCOD-DPL_dinov2',
     train_cfg = dict(

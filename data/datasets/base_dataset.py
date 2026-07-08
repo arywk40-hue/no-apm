@@ -125,7 +125,6 @@ class BaseCODDataset(Dataset):
         """Prepare feature cache."""
         self.prepare_feature_extractor()
         all_feature_list = []
-        all_plabel_list = []
         
         for img_path in track(
             self.image_paths, 
@@ -140,9 +139,7 @@ class BaseCODDataset(Dataset):
         # Cache features
         features_cache = self.cache_manager.get_features_cache()
         features_cache.dump_list(all_feature_list)
-        if self.mode == 'train':
-            pseudo_label_cache = self.cache_manager.get_pseudo_label_cache()
-    
+
     def __len__(self) -> int:
         return len(self.image_paths)
     
@@ -162,10 +159,10 @@ class BaseCODDataset(Dataset):
         if features_cache:
             features = features_cache.read_file(index)
         
-        # Load pseudo label if available
+        # Load pseudo label if available (requires pre-downloaded pseudo labels)
         pseudo_label = None
         pseudo_label_cache = self.cache_manager.get_pseudo_label_cache()
-        if pseudo_label_cache:
+        if pseudo_label_cache and pseudo_label_cache.io.mode == 'r':
             pseudo_label = pseudo_label_cache.read_file(index)
         
         return {

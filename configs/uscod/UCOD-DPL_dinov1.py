@@ -28,7 +28,7 @@ cfg = dict(
         feature_size=68,
     ),
     dataset_cfg=dict(
-        cache_dir='./datasets/cache',
+        cache_dir='./dataset/cache',
         val_loader_cfg = dict(
             batch_size=1,
             num_workers=0,

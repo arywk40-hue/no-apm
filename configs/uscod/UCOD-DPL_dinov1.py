@@ -35,7 +35,7 @@ cfg = dict(
             shuffle=False
         ),
         trainloader_cfg = dict(
-            batch_size=16,
+            batch_size=4,
             num_workers=0,
             shuffle=True
         ),

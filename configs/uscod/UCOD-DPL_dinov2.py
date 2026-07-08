@@ -40,7 +40,7 @@ cfg = dict(
             shuffle=True
         ),
         valset_cfg = dict(
-            DATASET='TE-CAMO',
+            DATASET='CHAMELEON+TE-CAMO+TE-COD10K+NC4K',
             require_label=True,
             image_size=(518,518),
         ),

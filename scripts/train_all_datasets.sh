@@ -42,14 +42,19 @@ echo "============================================"
 echo "  UCOD-DPL Baseline Training (No APM)"
 echo "  Config: $CONFIG_FILE"
 echo "  GPUs: $GPUS_PER_NODE"
-echo "  Train set: TR-CAMO + TR-COD10K"
+echo "  Train set: TR-CAMO + TR-COD10K + CHAMELEON + NC4K + TE-CAMO + TE-COD10K"
 echo "  Eval sets: CHAMELEON, TE-CAMO, TE-COD10K, NC4K"
 echo "============================================"
+
+echo ""
+echo "[STEP 1] Generating Pseudo Labels (Cache)..."
+echo "This might take 10-15 minutes if not already cached."
+PYTHONPATH=./ python scripts/../generate_pseudo_label.py --dataset TR-CAMO+TR-COD10K+CHAMELEON+NC4K+TE-CAMO+TE-COD10K
 
 # Train
 TRAIN_CMD="accelerate launch $DISTRIBUTED_ARGS scripts/train.py --config $CONFIG_FILE"
 echo ""
-echo "[STEP 1] Training..."
+echo "[STEP 2] Training..."
 echo "$TRAIN_CMD"
 ${TRAIN_CMD}
 

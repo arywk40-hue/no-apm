@@ -45,7 +45,7 @@ cfg = dict(
             image_size=(518,518),
         ),
         trainset_cfg = dict(
-            DATASET='TR-CAMO+TR-COD10K',
+            DATASET='TR-CAMO+TR-COD10K+CHAMELEON+NC4K+TE-CAMO+TE-COD10K',
             image_size=(518,518),
             require_label=False,
             bkg_th=0.6,

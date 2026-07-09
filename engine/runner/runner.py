@@ -194,12 +194,17 @@ class BaseRunner(ABC):
             checkpoint_path: Path to checkpoint, uses config default if None
         """
         self.start_epoch = 0
-        checkpoint_path = self.config.train_cfg.get('checkpoint', None)
+        if checkpoint_path is None:
+            checkpoint_path = self.config.train_cfg.get('checkpoint', None)
         if checkpoint_path is None:
             checkpoint_path = self._find_latest_checkpoint('ckp')
         try:
             checkpoint_path = os.path.join(checkpoint_path)
-            state_dict = load_file(checkpoint_path, device="cuda")
+            if os.path.isdir(checkpoint_path):
+                safetensors_path = os.path.join(checkpoint_path, "model.safetensors")
+            else:
+                safetensors_path = checkpoint_path
+            state_dict = load_file(safetensors_path, device="cuda")
             self.model.load_state_dict(state_dict)
             self.logger.info("Successfully loaded checkpoint weights from {}".format(checkpoint_path))
         except Exception as e:
@@ -537,7 +542,11 @@ class LocalRefineRunner(BaseRunner):
         try:
             self.logger.info(f"Loading refiner from: {refiner_path}")
             refiner_model_path = os.path.join(refiner_path)
-            state_dict = load_file(refiner_model_path, device="cuda")
+            if os.path.isdir(refiner_model_path):
+                safetensors_path = os.path.join(refiner_model_path, "model.safetensors")
+            else:
+                safetensors_path = refiner_model_path
+            state_dict = load_file(safetensors_path, device="cuda")
             self.refiner.load_state_dict(state_dict, strict=True)
             self.logger.info("Successfully loaded refiner weights")
         except Exception as e:
